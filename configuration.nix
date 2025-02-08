@@ -106,6 +106,8 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  services.flatpak.enable = true;
+
   programs = {
     firefox.enable = true;
     fish.enable = true;
@@ -128,16 +130,50 @@
     pavucontrol
     waybar
     wofi
+    hyprcursor
+    nwg-look
+    bibata-cursors
+    yazi
+    swww
+    papirus-icon-theme
     prismlauncher
     discord
+    ncspot
     killall
     wl-clipboard
-    clipse
-    hyprshot
+ #   cliphist	# clipse	# show 
+    hyprshot	# printscreen
     fastfetch
     starship
-    brightnessctl
-    inotify-tools
+    brightnessctl	# # control brightness
+    inotify-tools	# detect changes on some files
+    dmidecode	# show hw info
+    lshw	# show hw info
+    lm_sensors	# show temperatures
+    pipes
+    cbonsai
+    brave
+    vscode
+    nodejs
+    mako 	# notif daemon
+    libnotify
+    cmake
+    gnumake
+    ninja
+    gcc
+#    gimp
+  ];
+  
+  programs.yazi.settings.manager.prepend_keymap = [
+    {
+      run = [
+	''
+	  '''shell 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list''''
+	''
+	"yank"
+      ];
+      on = ["y"];
+    }
   ];
 
   fonts.packages = with pkgs; [
@@ -154,12 +190,16 @@
 
   # List services that you want to enable:
 
+  services = {
+    # mako.enable = true;
+  };
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 7236 7250 ];
+  networking.firewall.allowedUDPPorts = [ 7236 5353 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
