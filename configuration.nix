@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <home-manager/nixos>
     ];
 
   # Bootloader.
@@ -48,7 +47,7 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  # services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.enable = true;
   # services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
@@ -56,9 +55,6 @@
     layout = "br";
     variant = "thinkpad";
   };
-
-  # Configure console keymap
-  console.keyMap = "br-abnt2";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -90,95 +86,45 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users = {
-    users.maycon = {
-      isNormalUser = true;
-      description = "maycon";
-      extraGroups = [ "networkmanager" "wheel" ];
-      packages = with pkgs; [
-       #  kdePackages.kate
-       #  thunderbird
-      ];
-    };
-    defaultUserShell = pkgs.fish;
+  users.users.maycon = {
+    isNormalUser = true;
+    description = "Maycon";
+    extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.fish;
+    # packages = with pkgs; [
+    #   kdePackages.kate
+    # #  thunderbird
+    # ];
   };
+
+  # Install firefox.
+  programs = {
+    fish.enable = true;
+    hyprland.enable = true;
+    # firefox.enable = true;
+    
+  };
+  fonts.fontDir.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  services.flatpak.enable = true;
-
-  programs = {
-    firefox.enable = true;
-    fish.enable = true;
-    hyprland.enable = true;
-    steam = {
-      enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-    };
-  };
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-    kitty
     git
-    pavucontrol
-    waybar
-    wofi
-    hyprcursor
-    nwg-look
-    bibata-cursors
-    yazi
-    swww
-    papirus-icon-theme
-    prismlauncher
-    discord
-    ncspot
-    killall
-    wl-clipboard
- #   cliphist	# clipse	# show 
-    hyprshot	# printscreen
-    fastfetch
-    starship
-    brightnessctl	# # control brightness
-    inotify-tools	# detect changes on some files
-    dmidecode	# show hw info
-    lshw	# show hw info
-    lm_sensors	# show temperatures
-    pipes
-    cbonsai
-    brave
-    vscode
-    nodejs
-    mako 	# notif daemon
-    libnotify
-    cmake
-    gnumake
-    ninja
-    gcc
-#    gimp
-  ];
-  
-  programs.yazi.settings.manager.prepend_keymap = [
-    {
-      run = [
-	''
-	  '''shell 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list''''
-	''
-	"yank"
-      ];
-      on = ["y"];
-    }
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    # kitty
+    # wget
   ];
 
-  fonts.packages = with pkgs; [
-    font-awesome
-  ];
+  environment.variables = {
+    EDITOR = "vim";
+    GTK_THEME="Adwaita-dark";
+  };
+
+  security.polkit.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -190,16 +136,12 @@
 
   # List services that you want to enable:
 
-  services = {
-    # mako.enable = true;
-  };
-
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 7236 7250 ];
-  networking.firewall.allowedUDPPorts = [ 7236 5353 ];
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
