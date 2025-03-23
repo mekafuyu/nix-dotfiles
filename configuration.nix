@@ -97,12 +97,16 @@
     # ];
   };
 
-  # Install firefox.
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
   programs = {
     fish.enable = true;
     hyprland.enable = true;
-    # firefox.enable = true;
-    
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        jdk17
+      ];
+    };
   };
   fonts.fontDir.enable = true;
 
@@ -126,6 +130,17 @@
 
   security.polkit.enable = true;
 
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+  };
+  
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

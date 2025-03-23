@@ -13,6 +13,7 @@
       exec-once =
         [
           "waybar"
+          "swww-daemon"
         ]; 
       bind =
         [
@@ -25,6 +26,7 @@
           "$mod, R, exec, $menu"
           "$mod, P, pseudo, # dwindle"
           "$mod, J, togglesplit, # dwindle"
+          "$mod, F, fullscreen"
           "$mod, left, movefocus, l"
           "$mod, right, movefocus, r"
           "$mod, up, movefocus, u"

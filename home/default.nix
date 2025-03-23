@@ -39,13 +39,17 @@
     pipes
     cbonsai
     brave
-    vscode
+    vscode-fhs
+    jdk17
     nodejs
     mako 	# notif daemon
     # orchis-theme
     gnome-themes-extra
     gh
-    
+    mpv
+    hyprlock
+    hypridle
+    swaynotificationcenter
   ];
 
   fonts.fontconfig.enable = true;
@@ -59,8 +63,6 @@
     userName = "mekafuyu";
     userEmail = "mayconbrunob@hotmail.com";
   };
-
-  
 
   home.pointerCursor = {
     gtk.enable = true;
